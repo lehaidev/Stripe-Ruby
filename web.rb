@@ -71,7 +71,8 @@ end
 
 def create_customer
   Stripe::Customer.create(
-    :description => 'mobile SDK example customer',
+    :name => "Hai Le"
+    :description => 'lehaidev',
     :metadata => {
       # Add our application's customer id for this Customer, so it'll be easier to look up
       :my_customer_id => '72F8C533-FCD5-47A6-A45B-3956CA8C792D',
