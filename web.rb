@@ -333,7 +333,7 @@ end
 
 # Our example apps sell emoji apparel; this hash lets us calculate the total amount to charge.
 EMOJI_STORE = {
-  "👕" => 50,
+  "👕" => 100,
   "👖" => 4000,
   "👗" => 3000,
   "👞" => 700,
