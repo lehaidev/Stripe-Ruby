@@ -226,7 +226,7 @@ post '/create_payment_intent' do
     payment_intent = Stripe::PaymentIntent.create(
       :amount => amount,
       :currency => currency_for_country(payload[:country]),
-      :customer => payload[:customer_id] || @customer.id,
+      :customer => payload[:customer_id],
       :description => "Example PaymentIntent",
       :capture_method => ENV['CAPTURE_METHOD'] == "manual" ? "manual" : "automatic",
       payment_method_types: supported_payment_methods ? supported_payment_methods : payment_methods_for_country(payload[:country]),
@@ -333,7 +333,7 @@ end
 
 # Our example apps sell emoji apparel; this hash lets us calculate the total amount to charge.
 EMOJI_STORE = {
-  "👕" => 1000,
+  "👕" => 100,
   "👖" => 4000,
   "👗" => 3000,
   "👞" => 700,
@@ -358,7 +358,7 @@ def price_lookup(product)
 end
 
 def calculate_price(products, shipping)
-  amount = 1099  # Default amount.
+  amount = 0  # Default amount.
 
   if products
     amount = products.reduce(0) { | sum, product | sum + price_lookup(product) }
