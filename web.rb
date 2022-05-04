@@ -227,7 +227,7 @@ post '/create_payment_intent' do
       :amount => amount,
       :currency => currency_for_country(payload[:country]),
       :customer => payload[:customer_id],
-      :description => "Example PaymentIntent",
+      :description => "Mua bánh mì tại Gs25",
       :capture_method => ENV['CAPTURE_METHOD'] == "manual" ? "manual" : "automatic",
       payment_method_types: supported_payment_methods ? supported_payment_methods : payment_methods_for_country(payload[:country]),
       :metadata => {
@@ -275,11 +275,11 @@ post '/confirm_payment_intent' do
       payment_intent = Stripe::PaymentIntent.create(
         :amount => amount,
         :currency => currency_for_country(payload[:country]),
-        :customer => payload[:customer_id] || @customer.id,
+        :customer => payload[:customer_id],
         :source => payload[:source],
         :payment_method => payload[:payment_method_id],
         :payment_method_types => payment_methods_for_country(payload[:country]),
-        :description => "Example PaymentIntent",
+        :description => "Mua bánh mì tại Gs25",
         :shipping => payload[:shipping],
         :return_url => payload[:return_url],
         :confirm => true,
@@ -333,7 +333,7 @@ end
 
 # Our example apps sell emoji apparel; this hash lets us calculate the total amount to charge.
 EMOJI_STORE = {
-  "👕" => 100,
+  "👕" => 50,
   "👖" => 4000,
   "👗" => 3000,
   "👞" => 700,
