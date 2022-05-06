@@ -222,14 +222,13 @@ post '/create_payment_intent' do
   # Calculate how much to charge the customer
   # amount = calculate_price(payload[:products], payload[:shipping])
   amount = :amount
-  description = payment_description(:amount)
 
   begin
     payment_intent = Stripe::PaymentIntent.create(
       :amount => amount,
       :currency => currency_for_country(payload[:country]),
       :customer => payload[:customer_id],
-      :description => description,
+      :description => 'Mua bánh giò tại Gs25 thanh toán Facepay',
       :capture_method => ENV['CAPTURE_METHOD'] == "manual" ? "manual" : "automatic",
       payment_method_types: supported_payment_methods ? supported_payment_methods : payment_methods_for_country(payload[:country]),
       :metadata => {
@@ -436,20 +435,5 @@ def payment_methods_for_country(country)
     %w[card upi netbanking]
   else
     %w[card]
-  end
-end
-
-def payment_description(amount)
-  case amount
-  when amount.between?(5, 10)
-    'Mua nước aquafina tại BSMart thanh toán Facepay'
-  when amount.between?(10, 20)
-    'Mua bánh giò tại 7-Eleven thanh toán Facepay'
-  when amount.between?(20, 30)
-    'Mua kẹo mút tại FamilyMart thanh toán Facepay'
-  when amount.between?(30, 40)
-    'Mua monster tại Circle K thanh toán Facepay'
-  else
-    'Mua mì gói tại Gs25 thanh toán Facepay'
   end
 end
