@@ -411,8 +411,6 @@ def currency_for_country(country)
     'gbp'
   when 'in'
     'inr'
-  when 'vn'
-    'vnd'
   else
     'usd'
   end
@@ -421,8 +419,6 @@ end
 def payment_methods_for_country(country)
   case country
   when 'us'
-    %w[card]
-  when 'vn'
     %w[card]
   when 'mx'
     %w[card oxxo]
