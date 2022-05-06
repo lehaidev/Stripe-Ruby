@@ -269,7 +269,7 @@ post '/confirm_payment_intent' do
       payment_intent = Stripe::PaymentIntent.confirm(payload[:payment_intent_id], {:use_stripe_sdk => true})
     elsif payload[:payment_method_id]
       # Calculate how much to charge the customer
-      amount = calculate_price(payload[:products], payload[:shipping])
+      amount = :amount
 
       # Create and confirm the PaymentIntent
       payment_intent = Stripe::PaymentIntent.create(
@@ -397,6 +397,8 @@ def currency_for_country(country)
     'gbp'
   when 'in'
     'inr'
+  when 'vi'
+    'vnd'
   else
     'usd'
   end
