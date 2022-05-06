@@ -409,6 +409,8 @@ def payment_methods_for_country(country)
   case country
   when 'us'
     %w[card]
+  when 'vn'
+    %w[card]
   when 'mx'
     %w[card oxxo]
   when 'my'
