@@ -220,8 +220,7 @@ post '/create_payment_intent' do
   supported_payment_methods = payload[:supported_payment_methods] ? payload[:supported_payment_methods].split(",") : nil
 
   # Calculate how much to charge the customer
-  # amount = calculate_price(payload[:products], payload[:shipping])
-  amount = payload[:amount]
+  amount = calculate_price(payload[:amount], payload[:shipping])
 
   begin
     payment_intent = Stripe::PaymentIntent.create(
@@ -353,9 +352,22 @@ EMOJI_STORE = {
   "👚" => 2500,
 }
 
-def price_lookup(product)
-  price = EMOJI_STORE[product]
-  raise "Can't find price for %s (%s)" % [product, product.ord.to_s(16)] if price.nil?
+PRICE_STORE = {
+  "5" => 500,
+  "10" => 1000,
+  "15" => 1500,
+  "20" => 2000,
+  "25" => 2500,
+  "30" => 3000,
+  "35" => 3500,
+  "40" => 4000,
+  "45" => 4500,
+  "50" => 5000,
+}
+
+def price_lookup(amount)
+  price = PRICE_STORE[amount]
+  raise "Can't find price for %s (%s)" % [amount, amount.ord.to_s(16)] if price.nil?
   return price
 end
 
